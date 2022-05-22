@@ -3,6 +3,15 @@ module.exports = {
    theme: {
       extend: {},
    },
+   daisyui: {
+      themes: [
+         {
+            winter: {
+               ...require("daisyui/src/colors/themes")["[data-theme=winter]"],
+               "base-content": "black",
+            },
+         },
+      ],
+   },
    plugins: [require("daisyui")],
-   
 };

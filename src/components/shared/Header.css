@@ -1,0 +1,13 @@
+.menu .active{
+    color:#4639a1;
+    font-weight:700
+}
+.menu .active:after{
+    content: "";
+    height:2px;
+    width:30px;
+    position: absolute;
+    bottom:0;
+    background-color:#4639a1;
+
+}
