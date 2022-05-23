@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 import Product from "./Product";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import "./HomeProducts.css";
+import Loading from "../../components/Loading/Loading";
 
 const HomeProducts = () => {
    const { data: products, isLoading } = useQuery("products", () =>
@@ -13,12 +14,11 @@ const HomeProducts = () => {
    );
 
    if (isLoading) {
-      return <h1>Loading...</h1>;
+      return <Loading></Loading>;
    }
-   console.log(products);
    return (
-      <div className="pt-24 pb-52 px-3">
-         <div className="container mx-auto" style={{ maxWidth: "1000px" }}>
+      <div className="pt-24  px-3">
+         <div className="container mx-auto" style={{ maxWidth: "1100px" }}>
             <div className="mb-5">
                <h2 className="text-2xl md:text-4xl font-extrabold text-center ">
                   New Collection
@@ -46,8 +46,8 @@ const HomeProducts = () => {
                         slidesPerView: 3.5,
                      },
                   }}
-                  slidesPerView={3.5}
-                  spaceBetween={30}
+                  slidesPerView={3.1}
+                  spaceBetween={20}
                   centeredSlides={false}
                   pagination={{
                      clickable: true,
@@ -57,7 +57,7 @@ const HomeProducts = () => {
                   grabCursor={true}
                >
                   {products.map((product) => (
-                     <SwiperSlide key={product.id} className="pb-16">
+                     <SwiperSlide key={product.id} className="pb-16 mr-2">
                         <Product product={product}></Product>
                      </SwiperSlide>
                   ))}

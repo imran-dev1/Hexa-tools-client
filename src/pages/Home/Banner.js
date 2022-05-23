@@ -1,7 +1,10 @@
 import React from "react";
-import bg from "../../images/banner-bg.png";
+import bg from "../../images/banner-bg.svg";
 import tools from "../../images/tools.png";
 import CountUp from "react-countup";
+import { RiUserShared2Line } from "react-icons/ri";
+import { FaCoins } from "react-icons/fa";
+import { GoTools } from "react-icons/go";
 
 const Banner = () => {
    return (
@@ -25,30 +28,33 @@ const Banner = () => {
                      <h1 className=" text-2xl lg:text-2xl font-extrabold text-secondary uppercase">
                         Maintenance Kit
                      </h1>
-                     <p className="py-6 text-lg">
+                     <p className="py-6 text-lg max-w-md">
                         We are a manufacturer of high quality and low coast
                         maintenance kit.
                      </p>
                      <button className="btn rounded-sm text-white">
                         Browse Products
                      </button>
-                     <div className="flex flex-col md:flex-row gap-5 md:gap-16 mt-10">
-                        <div className=" text-black">
+                     <div className="flex flex-col md:flex-row gap-3 md:gap-16 mt-10">
+                        <div className=" text-primary flex flex-col items-center md:items-start bg-base-200 md:bg-transparent p-5 md:p-0 rounded-lg">
+                           <RiUserShared2Line className="text-4xl"></RiUserShared2Line>
                            <p className="text-4xl font-bold">
                               <CountUp start={70} end={100} duration={2} />+
                            </p>
                            <p className="text-xl font-bold">Customers</p>
                         </div>
-                        <div className="text-black">
+                        <div className="text-secondary flex flex-col items-center md:items-start bg-base-200 md:bg-transparent p-5 md:p-0 rounded-lg">
+                           <FaCoins className="text-4xl"></FaCoins>
                            <p className="text-4xl font-bold">
                               <CountUp start={55} end={70} duration={2} />
                               M+
                            </p>
                            <p className="text-xl font-bold">Annual revenues</p>
                         </div>
-                        <div className=" text-black">
+                        <div className=" text-accent flex flex-col items-center md:items-start bg-base-200 md:bg-transparent p-5 md:p-0 rounded-lg">
+                           <GoTools className="text-4xl"></GoTools>
                            <p className="text-4xl font-bold">
-                              <CountUp start={44} end={50} duration={2} />+
+                              <CountUp start={35} end={50} duration={2} />+
                            </p>
                            <p className="text-xl font-bold">Tools</p>
                         </div>

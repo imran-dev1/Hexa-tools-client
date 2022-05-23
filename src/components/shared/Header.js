@@ -7,7 +7,7 @@ const menuItems = (
    <>
       <li>
          <NavLink
-            className="py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary"
+            className="py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
             to="/"
          >
             Home
@@ -15,7 +15,7 @@ const menuItems = (
       </li>
       <li>
          <NavLink
-            className="rounded-md py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary"
+            className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
             to="/blogs"
          >
             Blogs
@@ -23,7 +23,7 @@ const menuItems = (
       </li>
       <li>
          <NavLink
-            className="rounded-md py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary"
+            className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
             to="/products"
          >
             Products
@@ -31,7 +31,7 @@ const menuItems = (
       </li>
       <li tabindex="0">
          <NavLink
-            className="rounded-md py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary gap-1"
+            className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary gap-1"
             to="/dashboard"
          >
             Dashboard
@@ -48,7 +48,7 @@ const menuItems = (
          <ul className="p-2 bg-base-100 shadow-lg rounded-lg left-0 top-full  w-full text-md">
             <li>
                <NavLink
-                  className="rounded-md py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary"
+                  className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
                   to="/my-orders"
                >
                   My Orders
@@ -56,7 +56,7 @@ const menuItems = (
             </li>
             <li>
                <NavLink
-                  className="rounded-md py-2 m-1 active:text-primary  bg-transparent text-black hover:text-primary"
+                  className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
                   to="/add-review"
                >
                   Add Review
@@ -91,7 +91,7 @@ const Header = ({ children }) => {
                      </div>
                      <div className="flex-none lg:hidden">
                         <label
-                           for="navbar-drawer"
+                           htmlFor="navbar-drawer"
                            className="btn btn-square btn-ghost"
                         >
                            <RiMenu3Fill className="text-2xl text-black"></RiMenu3Fill>
@@ -119,14 +119,14 @@ const Header = ({ children }) => {
                            <li>
                               <NavLink
                                  to="/my-profile"
-                                 className="justify-between  m-1 active:text-primary py-1 text-md bg-transparent text-black hover:text-primary"
+                                 className="justify-between  m-1 active:text-secondary py-1 text-md bg-transparent text-black hover:text-secondary"
                               >
                                  My Profile
                               </NavLink>
                            </li>
 
                            <li>
-                              <button className="justify-between py-1 text-md m-1 active:text-primary  bg-transparent text-black hover:text-primary">
+                              <button className="justify-between py-1 text-md m-1 active:text-secondary  bg-transparent text-black hover:text-secondary">
                                  Logout
                               </button>
                            </li>
@@ -137,7 +137,10 @@ const Header = ({ children }) => {
                {children}
             </div>
             <div className="drawer-side">
-               <label for="navbar-drawer" className="drawer-overlay"></label>
+               <label
+                  htmlFor="navbar-drawer"
+                  className="drawer-overlay"
+               ></label>
                <ul className="menu p-4 pt-16 text-lg overflow-y-auto w-56 bg-base-100">
                   {menuItems}
                </ul>

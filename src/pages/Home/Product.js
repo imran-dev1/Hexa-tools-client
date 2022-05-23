@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
    const { productName, price, image } = product;
-   console.log(productName);
    return (
-      <div className="item shadow-md rounded-lg">
+      <div className="item border-slate-100 border-2 rounded-lg">
          <div className=" h-64 bg-cover bg-no-repeat bg-center rounded-t-lg bg-[#ffffff] overflow-hidden relative">
             <img
                src={image}
@@ -20,9 +19,9 @@ const Product = ({ product }) => {
             <h3 className="text-lg md:text-xl">{productName}</h3>
             <h2 className="text-xl md:text-2xl py-2">${price}</h2>
 
-            <div className="flex flex-col items-center justify-between border-t border-slate-200 pt-2 text-slate-400 text-sm">
+            <div className="flex flex-col items-center justify-between border-t border-slate-200 pt-2 text-slate-500 text-md">
                <h4>Minimum Order: 10</h4>
-               <Link to="item-details" className="btn btn-primary capitalize text-white  rounded">
+               <Link to="item-details" className="bg-secondary hover:bg-secondary-focus py-2 px-5 capitalize text-white  rounded-sm mt-2 text-md font-bold">
                   Place order
                </Link>
             </div>
