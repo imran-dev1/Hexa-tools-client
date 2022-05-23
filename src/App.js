@@ -5,6 +5,7 @@ import Footer from "./components/shared/Footer";
 import Header from "./components/shared/Header";
 import Blogs from "./pages/Blogs/Blogs";
 import Home from "./pages/Home/Home";
+import Products from "./pages/Products/Products";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,10 @@ function App() {
                <Routes>
                   <Route path="/" element={<Home></Home>}></Route>
                   <Route path="blogs" element={<Blogs></Blogs>}></Route>
+                  <Route
+                     path="products"
+                     element={<Products></Products>}
+                  ></Route>
                </Routes>
                <Footer></Footer>
             </Header>

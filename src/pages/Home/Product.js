@@ -16,8 +16,8 @@ const Product = ({ product }) => {
             </span>
          </div>
          <div className="p-4  text-black rounded-b-lg text-left">
-            <h3 className="text-lg md:text-xl">{productName}</h3>
-            <h2 className="text-xl md:text-2xl py-2">${price}</h2>
+            <h3 className="text-lg md:text-lg">{productName}</h3>
+            <h2 className="text-xl md:text-xl py-2">${price}</h2>
 
             <div className="flex flex-col items-center justify-between border-t border-slate-200 pt-2 text-slate-500 text-md">
                <h4>Minimum Order: 10</h4>
