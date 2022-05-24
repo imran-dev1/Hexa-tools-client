@@ -10,7 +10,7 @@ import Loading from "../../components/Loading/Loading";
 
 const HomeProducts = () => {
    const { data: products, isLoading } = useQuery("products", () =>
-      fetch("products.json").then((res) => res.json())
+      fetch("http://localhost:4000/product/").then((res) => res.json())
    );
 
    if (isLoading) {
@@ -57,7 +57,7 @@ const HomeProducts = () => {
                   grabCursor={true}
                >
                   {products.map((product) => (
-                     <SwiperSlide key={product.id} className="pb-16 mr-2">
+                     <SwiperSlide key={product._id} className="pb-16 mr-2">
                         <Product product={product}></Product>
                      </SwiperSlide>
                   ))}

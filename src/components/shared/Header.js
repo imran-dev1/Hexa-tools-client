@@ -1,8 +1,11 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { RiMenu3Fill } from "react-icons/ri";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { RiMenu3Fill, RiUser3Line } from "react-icons/ri";
 import logo from "../../images/hexa-logo.svg";
 import "./Header.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
 const menuItems = (
    <>
       <li>
@@ -30,9 +33,8 @@ const menuItems = (
          </NavLink>
       </li>
       <li tabindex="0">
-         <NavLink
+         <span
             className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary gap-1"
-            to="/dashboard"
          >
             Dashboard
             <svg
@@ -44,22 +46,54 @@ const menuItems = (
             >
                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
-         </NavLink>
-         <ul className="p-2 bg-base-100 shadow-lg rounded-lg left-0 top-full  w-full text-md">
+         </span>
+         <ul className="p-2 bg-base-100 shadow-lg rounded-lg left-0 top-full  w-auto text-md">
             <li>
                <NavLink
-                  className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
-                  to="/my-orders"
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/my-orders"
                >
                   My Orders
                </NavLink>
             </li>
             <li>
                <NavLink
-                  className="rounded-md py-2 m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
-                  to="/add-review"
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/add-review"
                >
                   Add Review
+               </NavLink>
+            </li>
+            <li>
+               <NavLink
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/add-product"
+               >
+                  Add Product
+               </NavLink>
+            </li>
+            <li>
+               <NavLink
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/manage-all-products"
+               >
+                  Manage Products
+               </NavLink>
+            </li>
+            <li>
+               <NavLink
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/manage-all-orders"
+               >
+                  Manage Orders
+               </NavLink>
+            </li>
+            <li>
+               <NavLink
+                  className="m-1 active:text-secondary py-1 bg-transparent text-black hover:text-secondary"
+                  to="/dashboard/make-admin"
+               >
+                  Make An Admin
                </NavLink>
             </li>
          </ul>
@@ -68,6 +102,13 @@ const menuItems = (
 );
 
 const Header = ({ children }) => {
+   const [user] = useAuthState(auth);
+   const userFirstLetter = user?.displayName?.slice(0, 1);
+   const navigate = useNavigate();
+   const logOut = () => {
+      signOut(auth);
+      navigate("/");
+   };
    return (
       <div className="" id="header">
          <div className="drawer drawer-end">
@@ -103,35 +144,57 @@ const Header = ({ children }) => {
                            {menuItems}
                         </ul>
                      </div>
-                     <div className="dropdown dropdown-end">
-                        <label
-                           tabindex="0"
-                           className="btn btn-ghost btn-circle avatar"
-                        >
-                           <div className="w-10 rounded-full">
-                              <img src="https://api.lorem.space/image/face?hash=33791" />
+                     {!user ? (
+                        <Link to="/login">
+                           <div className="ring rounded-full bg-slate-700 p-3">
+                              <RiUser3Line className="text-xl w-full text-base-100"></RiUser3Line>
                            </div>
-                        </label>
-                        <ul
-                           tabindex="0"
-                           className="menu dropdown-content mt-3 p-2 shadow bg-base-100 rounded-lg w-40"
-                        >
-                           <li>
-                              <NavLink
-                                 to="/my-profile"
-                                 className="justify-between  m-1 active:text-secondary py-1 text-md bg-transparent text-black hover:text-secondary"
-                              >
-                                 My Profile
-                              </NavLink>
-                           </li>
+                        </Link>
+                     ) : (
+                        <div className="dropdown dropdown-end">
+                           <label
+                              tabIndex="0"
+                              className="btn btn-ghost btn-circle avatar"
+                           >
+                              {user?.photoURL !== null ? (
+                                 <div className="ring rounded-full">
+                                    <img src={user?.photoURL} alt="user" />
+                                 </div>
+                              ) : (
+                                 <div
+                                    className="w-52 ring bg-slate-700 rounded-full items-center justify-center"
+                                    style={{ display: "flex" }}
+                                 >
+                                    <span className="text-2xl text-white">
+                                       {userFirstLetter}
+                                    </span>
+                                 </div>
+                              )}
+                           </label>
+                           <ul
+                              tabIndex="0"
+                              className="menu dropdown-content mt-3 p-2 shadow bg-base-100 rounded-lg w-40"
+                           >
+                              <li>
+                                 <NavLink
+                                    to="/dashboard/my-profile"
+                                    className="justify-between  m-1 active:text-secondary py-1 text-md bg-transparent text-black hover:text-secondary"
+                                 >
+                                    My Profile
+                                 </NavLink>
+                              </li>
 
-                           <li>
-                              <button className="justify-between py-1 text-md m-1 active:text-secondary  bg-transparent text-black hover:text-secondary">
-                                 Logout
-                              </button>
-                           </li>
-                        </ul>
-                     </div>
+                              <li>
+                                 <button
+                                    onClick={logOut}
+                                    className="justify-between py-1 text-md m-1 active:text-secondary  bg-transparent text-black hover:text-secondary"
+                                 >
+                                    Logout
+                                 </button>
+                              </li>
+                           </ul>
+                        </div>
+                     )}
                   </div>
                </div>
                {children}

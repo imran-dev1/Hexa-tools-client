@@ -6,15 +6,15 @@ import { MdFormatQuote } from "react-icons/md";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
 import Loading from "../../components/Loading/Loading";
-import starFill from "../../images/star-fill.png";
 import "swiper/css";
 import "swiper/css/pagination";
-import Rating from "react-rating";
+import { Rating } from "react-simple-star-rating";
 
 const Reviews = () => {
    const { data: reviews, isLoading } = useQuery("reviews", () =>
-      fetch("reviews.json").then((res) => res.json())
+      fetch("http://localhost:4000/review").then((res) => res.json())
    );
+   console.log(reviews);
 
    if (isLoading) {
       return <Loading></Loading>;
@@ -68,13 +68,14 @@ const Reviews = () => {
                               alt=""
                            />
 
-                           <Rating
-                              key={index}
-                              emptySymbol={<AiOutlineStar className=" text-orange-400"></AiOutlineStar>}
-                              fullSymbol={<AiFillStar className=" text-orange-400"></AiFillStar>}
-                              initialRating={review.rating}
-                              readonly
-                           />
+                           <div>
+                              <Rating
+                                 key={index}
+                                 initialValue={review.ratings/20}
+                                 size="20"
+                                 readonly
+                              />
+                           </div>
                            <h4 className="text-xl">{review.author}</h4>
                            <MdFormatQuote className="text-3xl text-slate-400"></MdFormatQuote>
                            <blockquote className="italic text-slate-500">

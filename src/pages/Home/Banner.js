@@ -5,6 +5,7 @@ import CountUp from "react-countup";
 import { RiUserShared2Line } from "react-icons/ri";
 import { FaCoins } from "react-icons/fa";
 import { GoTools } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
    return (
@@ -32,9 +33,11 @@ const Banner = () => {
                         We are a manufacturer of high quality and low coast
                         maintenance kit.
                      </p>
-                     <button className="btn rounded-sm text-white">
-                        Browse Products
-                     </button>
+                     <Link to="/products">
+                        <button className="btn rounded-sm text-white">
+                           Browse Products
+                        </button>
+                     </Link>
                      <div className="flex flex-col md:flex-row gap-3 md:gap-16 mt-10">
                         <div className=" text-primary flex flex-col items-center md:items-start bg-base-200 md:bg-transparent p-5 md:p-0 rounded-lg">
                            <RiUserShared2Line className="text-4xl"></RiUserShared2Line>

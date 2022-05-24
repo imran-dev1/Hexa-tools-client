@@ -23,8 +23,8 @@ const BrandLogos = () => {
                </p>
             </div>
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-5 justify-center">
-               {brandLogos.map((logo) => (
-                  <div className="flex justify-center">
+               {brandLogos.map((logo,index) => (
+                  <div className="flex justify-center" key={index}>
                      <img
                         className=""
                         src={logo}

@@ -1,6 +1,5 @@
 [
    {
-      "id": 1,
       "productName": "Small Metal Towels",
       "price": "88.00",
       "productAdjective": "Intelligent",
@@ -8,7 +7,6 @@
       "image": "https://wpbingosite.com/wordpress/vitic/wp-content/webp-express/webp-images/uploads/2020/04/product-17.jpg.webp"
    },
    {
-      "id": 2,
       "productName": "Incredible Metal Cheese",
       "price": "444.00",
       "productAdjective": "Small",
@@ -16,7 +14,6 @@
       "image": "https://wpbingosite.com/wordpress/vitic/wp-content/webp-express/webp-images/uploads/2020/04/product-18.jpg.webp"
    },
    {
-      "id": 3,
       "productName": "Tasty Plastic Soap",
       "price": "949.00",
       "productAdjective": "Generic",
@@ -24,7 +21,6 @@
       "image": "https://wpbingosite.com/wordpress/vitic/wp-content/uploads/2020/04/product-12.jpg"
    },
    {
-      "id": 4,
       "productName": "Gorgeous Granite Mouse",
       "price": "68.00",
       "productAdjective": "Practical",
@@ -32,7 +28,6 @@
       "image": "https://wpbingosite.com/wordpress/vitic/wp-content/uploads/2020/04/product-2.jpg"
    },
    {
-      "id": 5,
       "productName": "Tasty Plastic Soap",
       "price": "949.00",
       "productAdjective": "Generic",
@@ -40,7 +35,6 @@
       "image": "https://wpbingosite.com/wordpress/vitic/wp-content/uploads/2020/04/product-12.jpg"
    },
    {
-      "id": 6,
       "productName": "Gorgeous Granite Mouse",
       "price": "68.00",
       "productAdjective": "Practical",

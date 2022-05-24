@@ -1,8 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Product = ({ product }) => {
-   const { productName, price, image } = product;
+   const { _id, productName, price, image } = product;
+   const navigate = useNavigate();
+
+   const redirectToPurchase = (id) => {
+      navigate(`/purchase/${id}`);
+   };
    return (
       <div className="item border-slate-100 border-2 rounded-lg">
          <div className=" h-64 bg-cover bg-no-repeat bg-center rounded-t-lg bg-[#ffffff] overflow-hidden relative">
@@ -21,9 +26,12 @@ const Product = ({ product }) => {
 
             <div className="flex flex-col items-center justify-between border-t border-slate-200 pt-2 text-slate-500 text-md">
                <h4>Minimum Order: 10</h4>
-               <Link to="item-details" className="bg-secondary hover:bg-secondary-focus py-2 px-5 capitalize text-white  rounded-sm mt-2 text-md font-bold">
+               <button
+                  onClick={() => redirectToPurchase(_id)}
+                  className="bg-secondary hover:bg-secondary-focus py-2 px-5 capitalize text-white  rounded-sm mt-2 text-md font-bold"
+               >
                   Place order
-               </Link>
+               </button>
             </div>
          </div>
       </div>
