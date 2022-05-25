@@ -9,12 +9,12 @@ const AddProduct = () => {
       formState: { errors },
       reset,
    } = useForm();
-   const [productAdding,setProductAdding] = useState(false)
+   const [productAdding, setProductAdding] = useState(false);
 
    const imgbbKey = "240d0933371a68f3b812609509cc49b5";
 
    const addProduct = async (data) => {
-      setProductAdding(true)
+      setProductAdding(true);
       const uploadedImage = data.image[0];
       const formData = new FormData();
       formData.append("image", uploadedImage);
@@ -48,9 +48,12 @@ const AddProduct = () => {
                   .then((res) => res.json())
                   .then((data) => {
                      if (data.insertedId) {
+                        toast.success("Product added successfully!");
                         reset();
-                        toast.success("Product added successfully!")
-                        setProductAdding(false)
+                        setProductAdding(false);
+                     }
+                     if (data.message) {
+                        toast.error(data.message);
                      }
                   });
             }
@@ -135,7 +138,7 @@ const AddProduct = () => {
             )}
             <input
                type="submit"
-               value={productAdding?"Adding...":"Add Product"}
+               value={productAdding ? "Adding..." : "Add Product"}
                className=" btn btn-primary text-lg text-white mt-3"
             />
          </form>

@@ -20,7 +20,7 @@ const Dashboard = () => {
                   <h2 className="text-3xl mb-5">My dashboard</h2>
                   <Outlet></Outlet>
                </div>
-               <div class="drawer-side">
+               <div class="drawer-side" style={{maxHeight:'100%'}}>
                   <label for="dashboard-drawer" class="drawer-overlay"></label>
                   <ul class="menu p-4 overflow-y-auto w-48 bg-base-200 text-base-content rounded-lg gap-1 text-lg block">
                      <li>
