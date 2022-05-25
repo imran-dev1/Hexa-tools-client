@@ -8,7 +8,7 @@ const Dashboard = () => {
    const [user] = useAuthState(auth);
    const [admin] = useAdmin(user);
    return (
-      <div className="pt-8 md:pt-16  px-3">
+      <div className="pt-8 md:pt-16  px-3 z-0">
          <div className="container mx-auto">
             <div class="drawer drawer-mobile py-5 h-auto">
                <input
@@ -20,9 +20,8 @@ const Dashboard = () => {
                   <h2 className="text-3xl mb-5">My dashboard</h2>
                   <Outlet></Outlet>
                </div>
-               <div class="drawer-side" style={{maxHeight:'100%'}}>
-                  <label for="dashboard-drawer" class="drawer-overlay"></label>
-                  <ul class="menu p-4 overflow-y-auto w-48 bg-base-200 text-base-content rounded-lg gap-1 text-lg block">
+               <div class="hidden lg:flex" style={{maxHeight:'100%'}}>
+                  <ul class="menu p-4 overflow-y-auto w-auto bg-base-200 text-base-content rounded-lg gap-1 text-lg block">
                      <li>
                         <NavLink
                            className="bg-transparent"
@@ -48,7 +47,7 @@ const Dashboard = () => {
                         </NavLink>
                      </li>
                      {admin && (
-                        <>
+                        <div className="text-left">
                            <li>
                               <NavLink
                                  className="bg-transparent"
@@ -81,7 +80,7 @@ const Dashboard = () => {
                                  Make Admin
                               </NavLink>
                            </li>
-                        </>
+                        </div>
                      )}
                   </ul>
                </div>

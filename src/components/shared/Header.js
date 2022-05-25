@@ -118,7 +118,7 @@ const Header = ({ children }) => {
                className="drawer-toggle"
             />
             <div className="drawer-content flex flex-col">
-               <div className="w-full sticky top-0 z-50 bg-white  navbar px-3">
+               <div className="w-full sticky top-0 z-10 bg-white  navbar px-3">
                   <div className="container mx-auto">
                      <div className="flex-1">
                         <Link to="/">

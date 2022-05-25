@@ -9,7 +9,6 @@ import { FiEdit } from "react-icons/fi";
 const ManageProducts = () => {
    const [deleteId, setDeleteId] = useState("");
    const [updatedProduct, setUpdatedProduct] = useState(null);
-   console.log(updatedProduct);
 
    const [productName, setProductName] = useState("");
    const [productDetails, setProductDetails] = useState("");
@@ -23,7 +22,6 @@ const ManageProducts = () => {
       setAvailable(updatedProduct?.available);
       setMinimumOrder(updatedProduct?.minimum_order);
    }, [updatedProduct]);
-   console.log(productName, productDetails, price, available, minimumOrder);
 
    const {
       data: products,
