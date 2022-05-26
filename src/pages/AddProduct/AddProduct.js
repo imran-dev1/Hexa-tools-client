@@ -53,7 +53,8 @@ const AddProduct = () => {
                         setProductAdding(false);
                      }
                      if (data.message) {
-                        toast.error(data.message);
+                        setProductAdding(false);
+                        toast.error("You don't have the authorization");
                      }
                   });
             }
@@ -88,7 +89,7 @@ const AddProduct = () => {
             <input
                {...register("price", { required: true })}
                className="input input-bordered w-full"
-               type="text"
+               type="number"
                placeholder="Price"
             />
             {errors.price?.type === "required" && (
@@ -102,7 +103,7 @@ const AddProduct = () => {
                   <input
                      {...register("available", { required: true })}
                      className="input input-bordered w-full"
-                     type="text"
+                     type="number"
                      placeholder="Available unit"
                   />
                   {errors.available?.type === "required" && (
@@ -115,7 +116,7 @@ const AddProduct = () => {
                   <input
                      {...register("minimumUnit", { required: true })}
                      className="input input-bordered w-full"
-                     type="text"
+                     type="number"
                      placeholder="Minimum Order Unit"
                   />
                   {errors.minimumUnit?.type === "required" && (

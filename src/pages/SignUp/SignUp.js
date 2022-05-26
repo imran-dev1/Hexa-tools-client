@@ -18,8 +18,6 @@ const SignUp = () => {
       useSignInWithGoogle(auth);
    const navigate = useNavigate();
     const [token] = useToken(user || gUser);
-    
-    console.log(gUser);
 
    const {
       register,

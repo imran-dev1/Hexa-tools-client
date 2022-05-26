@@ -7,21 +7,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 import useAdmin from "../../hooks/useAdmin";
-import useUserInfo from "../../hooks/useUserInfo";
-import Loading from "../Loading/Loading";
 
 const Header = ({ children }) => {
    const [user] = useAuthState(auth);
    const [admin] = useAdmin(user);
-   const [userInfo, isLoading, refetch] = useUserInfo(user);
+   const userFirstLetter = user?.displayName?.slice(0, 1);
    const navigate = useNavigate();
-
    const logOut = () => {
       signOut(auth);
       navigate("/");
    };
-
-   refetch();
 
    return (
       <div className="" id="header">
@@ -165,13 +160,18 @@ const Header = ({ children }) => {
                               tabIndex="0"
                               className="btn btn-ghost btn-circle avatar"
                            >
-                              {userInfo?.photo ? (
+                              {user?.photoURL !== null ? (
                                  <div className="ring rounded-full">
-                                    <img src={userInfo?.photo} alt="user" />
+                                    <img src={user?.photoURL} alt="user" />
                                  </div>
                               ) : (
-                                 <div className="ring rounded-full bg-slate-700 p-3">
-                                    <RiUser3Line className="text-xl w-full text-base-100"></RiUser3Line>
+                                 <div
+                                    className="w-52 ring bg-slate-700 rounded-full items-center justify-center"
+                                    style={{ display: "flex" }}
+                                 >
+                                    <span className="text-2xl text-white">
+                                       {userFirstLetter}
+                                    </span>
                                  </div>
                               )}
                            </label>

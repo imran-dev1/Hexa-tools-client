@@ -1,5 +1,5 @@
 // import { useAuthState } from "react-firebase-hooks/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import auth from "../../firebase.init";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -8,10 +8,14 @@ import { useForm } from "react-hook-form";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import useUserInfo from "../../hooks/useUserInfo";
+import toast from "react-hot-toast";
 
 const Purchase = () => {
    const [user] = useAuthState(auth);
-   const [quantity, setQuantity] = useState("100");
+   const [userInfo, isLoading, refetch] = useUserInfo(user);
+
+   const [quantity, setQuantity] = useState();
 
    const {
       register,
@@ -22,22 +26,71 @@ const Purchase = () => {
 
    const { _id } = useParams();
 
-   const { data: product, isLoading } = useQuery("product", () =>
+   const { data: product } = useQuery("product", () =>
       fetch(`http://localhost:4000/product/${_id}`).then((res) => {
          return res.json();
       })
    );
+   const [subtotal, setSubtotal] = useState();
+
+   const minimumUnit = parseInt(product?.minimum_order);
+   const availableUnit = parseInt(product?.available);
+   useEffect(() => {
+      setQuantity(minimumUnit);
+   }, [product, minimumUnit]);
+   useEffect(() => {
+      setSubtotal(parseInt(product?.price) * quantity);
+   }, [quantity,product?.price]);
    if (isLoading) {
       return <Loading></Loading>;
    }
 
    const decreaseQuantity = () => {
-      setQuantity(quantity - 1);
+      if (quantity > minimumUnit) {
+         setQuantity(quantity - 1);
+      }
    };
    const increaseQuantity = () => {
-      setQuantity(quantity + 1);
+      if (quantity < availableUnit) {
+         setQuantity(quantity + 1);
+      }
    };
 
+   const handleOrder = (data) => {
+      console.log(data);
+      const order = {
+         product: product.name,
+         productID: product._id,
+         orderUnit: data.quantity,
+         orderAmount: subtotal,
+         customerName: userInfo.name,
+         Email: userInfo.email,
+         phone: data.phone,
+         company: data.company,
+         street: data.street,
+         city: data.city,
+         country: data.country,
+         status: "unpaid",
+      };
+      fetch("http://localhost:4000/order", {
+         method: "POST",
+         headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+         body: JSON.stringify(order),
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            if (data.insertedId) {
+               toast.success("Order is placed successfully!");
+               reset();
+            }
+            if (data.message) {
+               toast.error("Forbidden Access! Please login again");
+            }
+         });
+   };
    return (
       <div className=" pt-20 px-3">
          <div className="container mx-auto" style={{ maxWidth: "1000px" }}>
@@ -47,53 +100,50 @@ const Purchase = () => {
                      <div className="flex gap-5">
                         <div className=" h-36 w-36 bg-cover bg-no-repeat bg-center rounded-lg bg-base-200 bg-blend-overlay overflow-hidden">
                            <img
-                              src={product.image}
+                              src={product?.image}
                               alt=""
                               className="item-thumbnail w-full h-full object-cover rounded-t-lg"
                            />
                         </div>
                         <div className="text-left">
-                           <h2 className="text-2xl mb-2">
-                              {product.productName}
-                           </h2>
+                           <h2 className="text-2xl mb-2">{product.name}</h2>
                            <span className="text-xl bg-secondary/30 px-3 py-1 rounded-full mr-2 font-normal">
-                              ${product.price}
+                              ${product?.price}
                            </span>
                            <span>/ per unit</span>
-                           <h4 className="mt-5">Available: 1000 unit.</h4>
+                           <h4 className="mt-5">
+                              Available: {product?.available} unit.
+                           </h4>
                            <h4 className="">
-                              Minimum order quantity: 100 unit.
+                              Minimum order quantity: {product?.minimum_order}{" "}
+                              unit.
                            </h4>
                         </div>
                      </div>
 
                      <div className="bg-base-200 p-5 rounded-lg my-5 text-left">
                         <h2 className="text-lg">Product Details - </h2>
-                        <p className="text-slate-600">
-                           Lorem ipsum dolor sit amet consectetur adipisicing
-                           elit. Voluptate praesentium quis laudantium
-                           reiciendis exercitationem mollitia soluta nesciunt
-                           laboriosam architecto! Voluptatem.
-                        </p>
+                        <p className="text-slate-600">{product?.details}</p>
                      </div>
                   </div>
                </div>
                <div className="md:w-3/6">
-                  <div className="border shadow-2xl p-10 rounded-lg">
-                     <form className=" flex flex-col gap-2 text-left">
+                  <div className="border shadow-2xl shadow-slate-200 p-10 rounded-lg">
+                     <form
+                        onSubmit={handleSubmit(handleOrder)}
+                        className=" flex flex-col gap-2 text-left"
+                     >
                         <h2 className="text-2xl mb-2">Order Form</h2>
                         <input
-                           {...register("name")}
                            className="input input-bordered w-full"
                            type="text"
-                           value={user.displayName}
+                           value={userInfo?.name}
                            disabled
                         />
                         <input
-                           {...register("email")}
                            className="input input-bordered w-full"
                            type="text"
-                           value={user.email}
+                           value={user?.email}
                            disabled
                         />
                         <input
@@ -112,7 +162,7 @@ const Purchase = () => {
                                  placeholder="Street"
                               />
                               {errors.street?.type === "required" && (
-                                 <p className="text-red-400 text-sm ">
+                                 <p className="text-red-400 text-sm mt-1">
                                     Street is required!
                                  </p>
                               )}
@@ -125,8 +175,8 @@ const Purchase = () => {
                                  placeholder="City"
                               />
                               {errors.city?.type === "required" && (
-                                 <p className="text-red-400 text-sm ">
-                                    Street is required!
+                                 <p className="text-red-400 text-sm mt-1 ">
+                                    City is required!
                                  </p>
                               )}
                            </div>
@@ -167,16 +217,15 @@ const Purchase = () => {
                            <input
                               {...register("quantity", {
                                  required: true,
-                                 pattern: /^[0-9]*$/,
                               })}
                               className="text-center focus:outline-primary/30 w-28 h-10 border"
-                              type="text"
-                              name=""
+                              type="number"
                               id=""
-                              min="100"
-                              Max="1000"
+                              max="500"
                               value={quantity}
-                              onChange={(e) => setQuantity(e.target.value)}
+                              onChange={(e) =>
+                                 setQuantity(parseInt(e.target.value))
+                              }
                            />
                            <div
                               onClick={increaseQuantity}
@@ -190,12 +239,35 @@ const Purchase = () => {
                               Please add quantity!
                            </p>
                         )}
-                        
+                        {quantity < minimumUnit && (
+                           <p className="text-red-400 text-sm ">
+                              Minimum order unit is{" "}
+                              <strong>{minimumUnit}</strong>
+                           </p>
+                        )}
+                        {quantity > availableUnit && (
+                           <p className="text-red-400 text-sm ">
+                              Available unit is <strong>{availableUnit}</strong>
+                           </p>
+                        )}
+
+                        <label className="my-3 text-lg" htmlFor="">
+                           Subtotal: $
+                           <input
+                              className="outline-0"
+                              type="text"
+                              value={subtotal}
+                              readOnly
+                           />
+                        </label>
 
                         <input
                            type="submit"
                            value="Place Order"
                            className=" btn btn-primary text-lg text-white mt-3"
+                           disabled={
+                              quantity < minimumUnit || quantity > availableUnit
+                           }
                         />
                      </form>
                   </div>

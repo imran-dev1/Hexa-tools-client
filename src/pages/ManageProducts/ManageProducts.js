@@ -48,13 +48,19 @@ const ManageProducts = () => {
             }),
             headers: {
                "Content-type": "application/json; charset=UTF-8",
+               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
          })
             .then((response) => response.json())
             .then((result) => {
+               console.log(result);
                if (result.modifiedCount) {
                   toast.success("Product successfully updated!");
                   refetch();
+                  setUpdatedProduct(null);
+               }
+               if (result.message) {
+                  toast.error("You don't have the authorization");
                   setUpdatedProduct(null);
                }
             });
@@ -79,7 +85,7 @@ const ManageProducts = () => {
                setDeleteId("");
             }
             if (result.message) {
-               toast.error(result.message);
+               toast.error("You don't have the authorization");
                setDeleteId("");
             }
          });
@@ -125,7 +131,7 @@ const ManageProducts = () => {
                         <td>{p.available}</td>
                         <td>{p.minimum_order}</td>
                         <th>
-                           <div className="flex gap-2">
+                           <div className="flex gap-2 items-center">
                               <label
                                  onClick={() => setUpdatedProduct(p)}
                                  for="update-product"

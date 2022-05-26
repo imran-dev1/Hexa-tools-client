@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import auth from "../../firebase.init";
 import useAdmin from "../../hooks/useAdmin";
+import "./Dashboard.css";
 
 const Dashboard = () => {
    const [user] = useAuthState(auth);
@@ -20,32 +21,37 @@ const Dashboard = () => {
                   <h2 className="text-3xl mb-5">My dashboard</h2>
                   <Outlet></Outlet>
                </div>
-               <div class="hidden lg:flex" style={{maxHeight:'100%'}}>
-                  <ul class="menu p-4 overflow-y-auto w-auto bg-base-200 text-base-content rounded-lg gap-1 text-lg block">
-                     <li>
-                        <NavLink
-                           className="bg-transparent"
-                           to="/dashboard/my-orders"
-                        >
-                           My Orders
-                        </NavLink>
-                     </li>
-                     <li>
-                        <NavLink
-                           className="bg-transparent"
-                           to="/dashboard/add-review"
-                        >
-                           Add A Review
-                        </NavLink>
-                     </li>
-                     <li>
-                        <NavLink
-                           className="bg-transparent"
-                           to="/dashboard/my-profile"
-                        >
-                           My Profile
-                        </NavLink>
-                     </li>
+               <div class="hidden lg:flex" style={{ maxHeight: "100%" }}>
+                  <ul class="menu p-4 overflow-y-auto w-auto bg-base-200  rounded-lg gap-1 text-lg block">
+                     {!admin && (
+                        <>
+                           {" "}
+                           <li>
+                              <NavLink
+                                 className="bg-transparent"
+                                 to="/dashboard/my-orders"
+                              >
+                                 My Orders
+                              </NavLink>
+                           </li>
+                           <li>
+                              <NavLink
+                                 className="bg-transparent"
+                                 to="/dashboard/add-review"
+                              >
+                                 Add A Review
+                              </NavLink>
+                           </li>
+                           <li>
+                              <NavLink
+                                 className="bg-transparent"
+                                 to="/dashboard/my-profile"
+                              >
+                                 My Profile
+                              </NavLink>
+                           </li>
+                        </>
+                     )}
                      {admin && (
                         <div className="text-left">
                            <li>
@@ -78,6 +84,14 @@ const Dashboard = () => {
                                  to="/dashboard/make-admin"
                               >
                                  Make Admin
+                              </NavLink>
+                           </li>
+                           <li>
+                              <NavLink
+                                 className="bg-transparent"
+                                 to="/dashboard/my-profile"
+                              >
+                                 My Profile
                               </NavLink>
                            </li>
                         </div>
