@@ -17,6 +17,7 @@ import ManageAllOrders from "./pages/ManageAllOrders/ManageAllOrders";
 import ManageProducts from "./pages/ManageProducts/ManageProducts";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import MyProfile from "./pages/MyProfile/MyProfile";
+import Payment from "./pages/Payment/Payment";
 import Products from "./pages/Products/Products";
 import Purchase from "./pages/Purchase/Purchase";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -49,6 +50,10 @@ function App() {
                            <Purchase></Purchase>
                         </RequireAuth>
                      }
+                  ></Route>
+                  <Route
+                     path="payment/:id"
+                     element={<Payment></Payment>}
                   ></Route>
                   <Route path="dashboard" element={<Dashboard></Dashboard>}>
                      <Route

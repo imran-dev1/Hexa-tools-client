@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { TiWarningOutline } from "react-icons/ti";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import auth from "../../firebase.init";
 
@@ -13,8 +14,8 @@ const MyOrders = () => {
       data: myOrders,
       isLoading,
       refetch,
-   } = useQuery(["myOrders",user], () =>
-      fetch(`http://localhost:4000/order/${user?.email}`, {
+   } = useQuery(["myOrders", user], () =>
+      fetch(`http://localhost:4000/order/?email=${user?.email}`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
@@ -98,9 +99,11 @@ const MyOrders = () => {
                                  </span>
                                  <label for="payment" class=" cursor-pointer">
                                     {order.status === "unpaid" && (
-                                       <span className="text-sm badge badge-lg border-0 text-white font-thin ">
-                                          Pay
-                                       </span>
+                                       <Link to={`/payment/${order._id}`}>
+                                          <span className="text-sm badge badge-lg border-0 text-white font-thin ">
+                                             Pay
+                                          </span>
+                                       </Link>
                                     )}
                                  </label>
                                  {order.status === "unpaid" && (

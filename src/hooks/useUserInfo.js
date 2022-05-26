@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 
 const useUserInfo = (user) => {
     const email = user?.email;
-    console.log(email);
    const {
       data: userInfo,
       isLoading,
