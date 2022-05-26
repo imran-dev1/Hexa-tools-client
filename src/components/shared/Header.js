@@ -13,7 +13,7 @@ import Loading from "../Loading/Loading";
 const Header = ({ children }) => {
    const [user] = useAuthState(auth);
    const [admin] = useAdmin(user);
-   const [userInfo, isLoading, refetch] = useUserInfo(user);
+   const [userInfo] = useUserInfo(user);
    const navigate = useNavigate();
 
    const logOut = () => {
@@ -21,7 +21,6 @@ const Header = ({ children }) => {
       navigate("/");
    };
 
-   refetch();
 
    return (
       <div className="" id="header">

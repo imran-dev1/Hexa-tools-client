@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import RequireAdmin from "./components/Authentication/RequireAdmin";
 import RequireAuth from "./components/Authentication/RequireAuth";
 import Footer from "./components/shared/Footer";
 import Header from "./components/shared/Header";
@@ -50,7 +51,14 @@ function App() {
                      }
                   ></Route>
                   <Route path="dashboard" element={<Dashboard></Dashboard>}>
-                     <Route index element=""></Route>
+                     <Route
+                        index
+                        element={
+                           <h2 className="text-2xl">
+                              Welcome to the dashboard
+                           </h2>
+                        }
+                     ></Route>
                      <Route
                         path="my-orders"
                         element={<MyOrders></MyOrders>}
@@ -65,19 +73,35 @@ function App() {
                      ></Route>
                      <Route
                         path="manage-all-orders"
-                        element={<ManageAllOrders></ManageAllOrders>}
+                        element={
+                           <RequireAdmin>
+                              <ManageAllOrders></ManageAllOrders>
+                           </RequireAdmin>
+                        }
                      ></Route>
                      <Route
                         path="manage-all-products"
-                        element={<ManageProducts></ManageProducts>}
+                        element={
+                           <RequireAdmin>
+                              <ManageProducts></ManageProducts>
+                           </RequireAdmin>
+                        }
                      ></Route>
                      <Route
                         path="add-product"
-                        element={<AddProduct></AddProduct>}
+                        element={
+                           <RequireAdmin>
+                              <AddProduct></AddProduct>
+                           </RequireAdmin>
+                        }
                      ></Route>
                      <Route
                         path="make-admin"
-                        element={<MakeAdmin></MakeAdmin>}
+                        element={
+                           <RequireAdmin>
+                              <MakeAdmin></MakeAdmin>
+                           </RequireAdmin>
+                        }
                      ></Route>
                   </Route>
                </Routes>

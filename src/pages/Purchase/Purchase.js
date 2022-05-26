@@ -10,6 +10,7 @@ import auth from "../../firebase.init";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import useUserInfo from "../../hooks/useUserInfo";
 import toast from "react-hot-toast";
+import { format } from "date-fns";
 
 const Purchase = () => {
    const [user] = useAuthState(auth);
@@ -40,7 +41,8 @@ const Purchase = () => {
    }, [product, minimumUnit]);
    useEffect(() => {
       setSubtotal(parseInt(product?.price) * quantity);
-   }, [quantity,product?.price]);
+   }, [quantity, product?.price]);
+
    if (isLoading) {
       return <Loading></Loading>;
    }
@@ -55,16 +57,20 @@ const Purchase = () => {
          setQuantity(quantity + 1);
       }
    };
+   const date = new Date();
+   const formattedDate = format(date, "PP");
 
    const handleOrder = (data) => {
       console.log(data);
       const order = {
+         orderDate: formattedDate,
          product: product.name,
          productID: product._id,
-         orderUnit: data.quantity,
+         productImg: product.image,
+         orderUnit: quantity,
          orderAmount: subtotal,
          customerName: userInfo.name,
-         Email: userInfo.email,
+         email: userInfo.email,
          phone: data.phone,
          company: data.company,
          street: data.street,
@@ -85,6 +91,7 @@ const Purchase = () => {
             if (data.insertedId) {
                toast.success("Order is placed successfully!");
                reset();
+               setQuantity(minimumUnit);
             }
             if (data.message) {
                toast.error("Forbidden Access! Please login again");
@@ -106,7 +113,7 @@ const Purchase = () => {
                            />
                         </div>
                         <div className="text-left">
-                           <h2 className="text-2xl mb-2">{product.name}</h2>
+                           <h2 className="text-2xl mb-2">{product?.name}</h2>
                            <span className="text-xl bg-secondary/30 px-3 py-1 rounded-full mr-2 font-normal">
                               ${product?.price}
                            </span>
@@ -215,13 +222,11 @@ const Purchase = () => {
                               <FiMinus></FiMinus>
                            </div>
                            <input
-                              {...register("quantity", {
-                                 required: true,
-                              })}
                               className="text-center focus:outline-primary/30 w-28 h-10 border"
                               type="number"
                               id=""
-                              max="500"
+                              min={minimumUnit}
+                              max={availableUnit}
                               value={quantity}
                               onChange={(e) =>
                                  setQuantity(parseInt(e.target.value))
