@@ -71,7 +71,7 @@ const Reviews = () => {
                            <div>
                               <Rating
                                  key={index}
-                                 initialValue={review.ratings/20}
+                                 initialValue={review.ratings / 20}
                                  size="20"
                                  readonly
                               />

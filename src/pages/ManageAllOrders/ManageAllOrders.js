@@ -9,7 +9,7 @@ import Loading from "../../components/Loading/Loading";
 import auth from "../../firebase.init";
 
 const ManageAllOrders = () => {
-   const [user] = useAuthState(auth);
+   const [user, loading] = useAuthState(auth);
    const [deleteOrderId, setDeleteOrderId] = useState("");
    const {
       data: allOrders,
@@ -24,7 +24,7 @@ const ManageAllOrders = () => {
          },
       }).then((res) => res.json())
    );
-   if (isLoading) {
+   if (isLoading || loading) {
       return <Loading></Loading>;
    }
 
@@ -94,7 +94,14 @@ const ManageAllOrders = () => {
                               </div>
                            </td>
                            <td>${order.orderAmount}</td>
-                           <td>{order.orderDate}</td>
+                           <td>
+                              <div className="flex flex-col">
+                                 <span>{order.orderDate}</span>
+                                 <span className="text-slate-400">
+                                    {order.orderTime}
+                                 </span>
+                              </div>
+                           </td>
                            <td>{order.customerName}</td>
                            <td>{order.email}</td>
                            <th>
@@ -102,7 +109,7 @@ const ManageAllOrders = () => {
                                  <span className="text-sm badge bg-base-300 border-0 text-black font-thin ">
                                     {order.status}
                                  </span>
-                                 
+
                                  {order.status === "unpaid" && (
                                     <label
                                        for="delete-order"

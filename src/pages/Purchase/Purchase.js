@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { format } from "date-fns";
 
 const Purchase = () => {
-   const [user] = useAuthState(auth);
+   const [user, loading] = useAuthState(auth);
    const [userInfo, isLoading, refetch] = useUserInfo(user);
 
    const [quantity, setQuantity] = useState();
@@ -43,7 +43,7 @@ const Purchase = () => {
       setSubtotal(parseInt(product?.price) * quantity);
    }, [quantity, product?.price]);
 
-   if (isLoading) {
+   if (isLoading || loading) {
       return <Loading></Loading>;
    }
 
@@ -59,11 +59,13 @@ const Purchase = () => {
    };
    const date = new Date();
    const formattedDate = format(date, "PP");
+   const formattedTime = format(date, "p");
 
    const handleOrder = (data) => {
       console.log(data);
       const order = {
          orderDate: formattedDate,
+         orderTime: formattedTime,
          product: product.name,
          productID: product._id,
          productImg: product.image,

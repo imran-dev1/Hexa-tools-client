@@ -7,15 +7,13 @@ import useUserInfo from "../../hooks/useUserInfo";
 import Loading from "../../components/Loading/Loading";
 
 const MyProfile = () => {
-   const [user] = useAuthState(auth);
+   const [user, loading] = useAuthState(auth);
    const [update, setUpdate] = useState(false);
    const [userInfo, isLoading, refetch] = useUserInfo(user);
 
-   if (isLoading) {
+   if (isLoading || loading) {
       return <Loading></Loading>;
    }
-    
-  refetch()
 
    return (
       <div>

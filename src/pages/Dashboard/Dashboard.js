@@ -1,13 +1,17 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 import auth from "../../firebase.init";
 import useAdmin from "../../hooks/useAdmin";
 import "./Dashboard.css";
 
 const Dashboard = () => {
-   const [user] = useAuthState(auth);
-   const [admin] = useAdmin(user);
+   const [user, loading] = useAuthState(auth);
+   const [admin, adminLoading] = useAdmin(user);
+   if (loading || adminLoading) {
+      return <Loading></Loading>;
+   }
    return (
       <div className="pt-8 md:pt-16  px-3 z-0">
          <div className="container mx-auto">

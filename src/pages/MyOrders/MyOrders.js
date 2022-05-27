@@ -8,7 +8,7 @@ import Loading from "../../components/Loading/Loading";
 import auth from "../../firebase.init";
 
 const MyOrders = () => {
-   const [user] = useAuthState(auth);
+   const [user,loading] = useAuthState(auth);
    const [deleteOrderId, setDeleteOrderId] = useState("");
    const {
       data: myOrders,
@@ -23,7 +23,7 @@ const MyOrders = () => {
          },
       }).then((res) => res.json())
    );
-   if (isLoading) {
+   if (loading||isLoading) {
       return <Loading></Loading>;
    }
 
@@ -91,7 +91,14 @@ const MyOrders = () => {
                               </div>
                            </td>
                            <td>${order.orderAmount}</td>
-                           <td>{order.orderDate}</td>
+                           <td>
+                              <div className="flex flex-col">
+                                 <span>{order.orderDate}</span>
+                                 <span className="text-slate-400">
+                                    {order.orderTime}
+                                 </span>
+                              </div>
+                           </td>
                            <th>
                               <div className="flex gap-2 items-center">
                                  <span className="text-sm badge bg-base-300 border-0 text-black font-thin ">

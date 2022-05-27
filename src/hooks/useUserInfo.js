@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 
 const useUserInfo = (user) => {
-    const email = user?.email;
+   const email = user?.email;
    const {
       data: userInfo,
       isLoading,
@@ -14,7 +14,7 @@ const useUserInfo = (user) => {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       }).then((res) => res.json())
-       );
+   );
 
    return [userInfo, isLoading, refetch];
 };

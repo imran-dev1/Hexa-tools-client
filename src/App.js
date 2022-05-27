@@ -18,6 +18,7 @@ import ManageProducts from "./pages/ManageProducts/ManageProducts";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import Payment from "./pages/Payment/Payment";
+import PaymentSuccess from "./pages/Payment/PaymentSuccess";
 import Products from "./pages/Products/Products";
 import Purchase from "./pages/Purchase/Purchase";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -53,7 +54,19 @@ function App() {
                   ></Route>
                   <Route
                      path="payment/:id"
-                     element={<Payment></Payment>}
+                     element={
+                        <RequireAuth>
+                           <Payment></Payment>
+                        </RequireAuth>
+                     }
+                  ></Route>
+                  <Route
+                     path="payment-success/:tId"
+                     element={
+                        <RequireAuth>
+                           <PaymentSuccess></PaymentSuccess>
+                        </RequireAuth>
+                     }
                   ></Route>
                   <Route path="dashboard" element={<Dashboard></Dashboard>}>
                      <Route

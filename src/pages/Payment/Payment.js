@@ -1,23 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useQueries } from "react-query";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import React from "react";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import CheckoutForm from "../../components/CheckoutForm";
 import Loading from "../../components/Loading/Loading";
+
+const stripePromise = loadStripe(
+   "pk_test_51L3hwDHOdcLNLMmMzlfRClYQ6grMqGRVvbp9PM5BzoTXneOcZAQ09xeZERZR6XxAq0r4UxplhHuUEbHsW5USEpdn00at042qfj"
+);
 
 const Payment = () => {
    const { id } = useParams();
-   const [order, setOrder] = useState({});
 
-   useEffect(() => {
+   //    const [order, setOrder] = useState({});
+
+   const { data: order, isLoading } = useQuery(["purchase", id], () =>
       fetch(`http://localhost:4000/order/${id}`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
-      })
-         .then((res) => res.json())
-         .then((data) => setOrder(data));
-   }, []);
+      }).then((res) => res.json())
+   );
+
+   if (isLoading) {
+      return <Loading></Loading>;
+   }
+
+   //    useEffect(() => {
+   //       fetch(`http://localhost:4000/order/${id}`, {
+   //          method: "GET",
+   //          headers: {
+   //             "content-type": "application/json",
+   //             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+   //          },
+   //       })
+   //          .then((res) => res.json())
+   //          .then((data) => setOrder(data));
+   //    }, [id]);
 
    return (
       <div className=" pt-20 px-3">
@@ -37,10 +59,10 @@ const Payment = () => {
                            <h2 className="text-2xl mb-1">{order?.product}</h2>
 
                            <span className="text-slate-400">
-                              Order#{order._id}
+                              Order#{order?._id}
                            </span>
                            <span className="text-sm badge bg-base-300 border-0 text-black font-thin ">
-                              {order.status}
+                              {order?.status}
                            </span>
                            <h4 className="mt-5">
                               Quantity: {order?.orderUnit} unit.
@@ -55,17 +77,21 @@ const Payment = () => {
                         <h2 className="text-lg mb-5 font-bold">
                            Shipping Details -{" "}
                         </h2>
-                        <p className="">{order.customerName}</p>
+                        <p className="">{order?.customerName}</p>
                         <p className="">
-                           {order.street}, {order.city}, {order.country}
+                           {order?.street}, {order?.city}, {order?.country}
                         </p>
-                        <p className="">{order.email}</p>
-                        <p className="">{order.phone}</p>
+                        <p className="">{order?.email}</p>
+                        <p className="">{order?.phone}</p>
                      </div>
                   </div>
                </div>
                <div className="md:w-3/6">
-                  <div className="border shadow-2xl shadow-slate-200 p-10 rounded-lg"></div>
+                  <div className="border shadow-2xl shadow-slate-200 p-10 rounded-lg">
+                     <Elements stripe={stripePromise}>
+                        <CheckoutForm order={order} />
+                     </Elements>
+                  </div>
                </div>
             </div>
          </div>

@@ -36,8 +36,8 @@ const MakeAdmin = () => {
          },
       })
          .then((res) => {
-             if (res.status === 403) {
-                toast.error("You don't have the authorization");
+            if (res.status === 403) {
+               toast.error("You don't have the authorization");
             }
             return res.json();
          })

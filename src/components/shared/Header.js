@@ -8,18 +8,19 @@ import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 import useAdmin from "../../hooks/useAdmin";
 import useUserInfo from "../../hooks/useUserInfo";
-import Loading from "../Loading/Loading";
 
 const Header = ({ children }) => {
    const [user] = useAuthState(auth);
    const [admin] = useAdmin(user);
-   const [userInfo] = useUserInfo(user);
+   const [userInfo, isLoading, refetch] = useUserInfo(user);
    const navigate = useNavigate();
 
    const logOut = () => {
       signOut(auth);
       navigate("/");
    };
+   
+   refetch();
 
 
    return (
