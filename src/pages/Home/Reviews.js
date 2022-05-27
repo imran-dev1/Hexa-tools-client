@@ -3,8 +3,6 @@ import { useQuery } from "react-query";
 import { FreeMode, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdFormatQuote } from "react-icons/md";
-import { AiOutlineStar } from "react-icons/ai";
-import { AiFillStar } from "react-icons/ai";
 import Loading from "../../components/Loading/Loading";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -14,7 +12,6 @@ const Reviews = () => {
    const { data: reviews, isLoading } = useQuery("reviews", () =>
       fetch("https://hexa-tools.herokuapp.com/review").then((res) => res.json())
    );
-   console.log(reviews);
 
    if (isLoading) {
       return <Loading></Loading>;

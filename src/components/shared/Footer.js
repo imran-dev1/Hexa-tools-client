@@ -24,7 +24,7 @@ const Footer = () => {
                   <ul className="text-slate-300 flex flex-col gap-2">
                      <li>
                         <Link
-                           to="/my-orders"
+                           to="/dashboard/my-orders"
                            className="hover:text-white hover:translate-x-1 transition-all inline-block hover:scale-[1.1]"
                         >
                            Mange Orders
@@ -32,7 +32,7 @@ const Footer = () => {
                      </li>
                      <li>
                         <Link
-                           to="/my-profile"
+                           to="/dashboard/my-profile"
                            className="hover:text-white hover:translate-x-1 transition-all inline-block hover:scale-[1.1]"
                         >
                            My Profile

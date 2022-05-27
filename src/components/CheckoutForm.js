@@ -70,7 +70,7 @@ const CheckoutForm = ({ order }) => {
             method: "PATCH",
             body: JSON.stringify({
                txId: paymentIntent.id,
-               status: "paid",
+               status: "pending",
             }),
             headers: {
                "Content-type": "application/json; charset=UTF-8",
