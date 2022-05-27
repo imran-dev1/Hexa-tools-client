@@ -50,6 +50,23 @@ const ManageAllOrders = () => {
             }
          });
    };
+   const handleShipped = (id) => {
+      fetch(`https://hexa-tools.herokuapp.com/order-shipped/${id}`, {
+         method: "PATCH",
+         headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+         body: JSON.stringify({ status: "shipped" }),
+      })
+         .then((res) => res.json())
+         .then((result) => {
+            if (result.modifiedCount) {
+               toast.success("Order shipped successfully!");
+               refetch();
+            }
+         });
+   };
    return (
       <div>
          <h2 className="text-xl mb-2">Manage all orders</h2>
@@ -114,9 +131,11 @@ const ManageAllOrders = () => {
                               <div className="flex gap-2 items-center">
                                  <span
                                     className={`text-sm badge  border-0 text-black font-thin ${
-                                       order.status === "paid"
-                                          ? "bg-success"
-                                          : "bg-base-300"
+                                       order.status === "unpaid"
+                                          ? "bg-base-300"
+                                          : order.status === "pending"
+                                          ? "bg-primary"
+                                          : "bg-success"
                                     }`}
                                  >
                                     {order.status}
@@ -131,6 +150,15 @@ const ManageAllOrders = () => {
                                        className="text-sm badge badge-lg border-0 text-white font-thin badge-error cursor-pointer"
                                     >
                                        Cancel
+                                    </label>
+                                 )}
+                                 {order.status === "pending" && (
+                                    <label
+                                       for=""
+                                       onClick={() => handleShipped(order._id)}
+                                       className="text-sm badge badge-lg border-0 text-black font-thin badge-info cursor-pointer"
+                                    >
+                                       Ship Order
                                     </label>
                                  )}
                               </div>
