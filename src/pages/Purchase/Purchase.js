@@ -14,7 +14,7 @@ import { format } from "date-fns";
 
 const Purchase = () => {
    const [user, loading] = useAuthState(auth);
-   const [userInfo, isLoading, refetch] = useUserInfo(user);
+   const [userInfo] = useUserInfo(user);
 
    const [quantity, setQuantity] = useState();
 
@@ -27,8 +27,12 @@ const Purchase = () => {
 
    const { _id } = useParams();
 
-   const { data: product } = useQuery("product", () =>
-      fetch(`http://localhost:4000/product/${_id}`).then((res) => {
+   const {
+      data: product,
+      isLoading,
+      refetch,
+   } = useQuery("product", () =>
+      fetch(`https://hexa-tools.herokuapp.com/product/${_id}`).then((res) => {
          return res.json();
       })
    );
@@ -78,9 +82,10 @@ const Purchase = () => {
          street: data.street,
          city: data.city,
          country: data.country,
+         txId: "",
          status: "unpaid",
       };
-      fetch("http://localhost:4000/order", {
+      fetch("https://hexa-tools.herokuapp.com/order", {
          method: "POST",
          headers: {
             "content-type": "application/json",
@@ -92,6 +97,27 @@ const Purchase = () => {
          .then((data) => {
             if (data.insertedId) {
                toast.success("Order is placed successfully!");
+               fetch(
+                  `https://hexa-tools.herokuapp.com/product-available/${product._id}`,
+                  {
+                     method: "PATCH",
+                     body: JSON.stringify({
+                        available: availableUnit - quantity,
+                     }),
+                     headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        authorization: `Bearer ${localStorage.getItem(
+                           "accessToken"
+                        )}`,
+                     },
+                  }
+               )
+                  .then((response) => response.json())
+                  .then((result) => {
+                     if (result.modifiedCount) {
+                        refetch();
+                     }
+                  });
                reset();
                setQuantity(minimumUnit);
             }

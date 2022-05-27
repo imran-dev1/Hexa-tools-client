@@ -1,6 +1,6 @@
 import React from "react";
 import bg from "../../images/banner-bg.svg";
-import tools from "../../images/tools.png";
+import drill from "../../images/drill.svg";
 import CountUp from "react-countup";
 import { RiUserShared2Line } from "react-icons/ri";
 import { FaCoins } from "react-icons/fa";
@@ -18,8 +18,8 @@ const Banner = () => {
             <div className="pt-10 md:pt-28 md:pb-16">
                <div className="hero-content flex-col lg:flex-row-reverse gap-10">
                   <img
-                     src={tools}
-                     className="flex-1 max-w-[250px] md:max-w-sm"
+                     src={drill}
+                     className="flex-1 max-w-[250px] md:max-w-lg"
                      alt=""
                   />
                   <div className="flex-1 text-left">
@@ -31,7 +31,7 @@ const Banner = () => {
                      </h1>
                      <p className="py-6 text-lg max-w-md">
                         We are a manufacturer of high quality and low coast
-                        maintenance kit.
+                        maintenance kit. The kits are durable, low cost and long lasting.
                      </p>
                      <Link to="/products">
                         <button className="btn rounded-sm text-white">

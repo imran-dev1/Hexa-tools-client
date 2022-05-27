@@ -35,7 +35,7 @@ const AddProduct = () => {
                   available: data.available,
                   minimum_order: data.minimumUnit,
                };
-               fetch("http://localhost:4000/product", {
+               fetch("https://hexa-tools.herokuapp.com/product", {
                   method: "POST",
                   headers: {
                      "content-type": "application/json",

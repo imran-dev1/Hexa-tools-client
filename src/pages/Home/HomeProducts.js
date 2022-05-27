@@ -10,7 +10,9 @@ import Loading from "../../components/Loading/Loading";
 
 const HomeProducts = () => {
    const { data: products, isLoading } = useQuery("products", () =>
-      fetch("http://localhost:4000/product/").then((res) => res.json())
+      fetch("https://hexa-tools.herokuapp.com/product/").then((res) =>
+         res.json()
+      )
    );
 
    if (isLoading) {

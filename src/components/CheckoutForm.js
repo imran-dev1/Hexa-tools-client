@@ -6,15 +6,15 @@ const CheckoutForm = ({ order }) => {
    const stripe = useStripe();
    const elements = useElements();
    const [cardError, setCardError] = useState("");
-   const [success, setSuccess] = useState("");
    const [clientSecret, setClientSecret] = useState("");
    const navigate = useNavigate();
+   const [loadingPayment, setLoadingPayment] = useState(false);
 
    const { orderAmount, customerName, email } = order;
    const amount = parseInt(orderAmount);
 
    useEffect(() => {
-      fetch("http://localhost:4000/create-payment-intent", {
+      fetch("https://hexa-tools.herokuapp.com/create-payment-intent", {
          method: "POST",
          headers: {
             "content-type": "application/json",
@@ -32,6 +32,7 @@ const CheckoutForm = ({ order }) => {
 
    const handleSubmit = async (event) => {
       event.preventDefault();
+      setLoadingPayment(true);
       if (!stripe || !elements) {
          return;
       }
@@ -50,7 +51,6 @@ const CheckoutForm = ({ order }) => {
       } else {
          setCardError("");
       }
-      setSuccess("");
       const { paymentIntent, error: intentError } =
          await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
@@ -62,11 +62,26 @@ const CheckoutForm = ({ order }) => {
             },
          });
       if (intentError) {
+         setLoadingPayment(false);
          setCardError(intentError?.message);
       } else {
          setCardError("");
-         navigate(`/payment-success/${paymentIntent.id}`);
-         setSuccess("Congratulation! Your Payment is successful.");
+         fetch(`https://hexa-tools.herokuapp.com/order/${order._id}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+               txId: paymentIntent.id,
+               status: "paid",
+            }),
+            headers: {
+               "Content-type": "application/json; charset=UTF-8",
+               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+         })
+            .then((response) => response.json())
+            .then((result) => {
+               setLoadingPayment(false);
+               navigate(`/payment-success/${paymentIntent.id}`);
+            });
       }
    };
    return (
@@ -94,11 +109,10 @@ const CheckoutForm = ({ order }) => {
                type="submit"
                disabled={!stripe || !clientSecret}
             >
-               Pay
+               {loadingPayment ? "Processing..." : "Pay"}
             </button>
          </form>
          {cardError && <p className=" text-red-500">{cardError}</p>}
-         {success && <p className=" text-green-600">{success}</p>}
       </>
    );
 };

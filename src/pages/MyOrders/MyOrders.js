@@ -8,14 +8,14 @@ import Loading from "../../components/Loading/Loading";
 import auth from "../../firebase.init";
 
 const MyOrders = () => {
-   const [user,loading] = useAuthState(auth);
+   const [user, loading] = useAuthState(auth);
    const [deleteOrderId, setDeleteOrderId] = useState("");
    const {
       data: myOrders,
       isLoading,
       refetch,
    } = useQuery(["myOrders", user], () =>
-      fetch(`http://localhost:4000/order/?email=${user?.email}`, {
+      fetch(`https://hexa-tools.herokuapp.com/order/?email=${user?.email}`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
@@ -23,13 +23,13 @@ const MyOrders = () => {
          },
       }).then((res) => res.json())
    );
-   if (loading||isLoading) {
+   if (loading || isLoading) {
       return <Loading></Loading>;
    }
 
    const handleCancelOrder = (id) => {
       console.log(id);
-      fetch(`http://localhost:4000/order/${id}`, {
+      fetch(`https://hexa-tools.herokuapp.com/order/${id}`, {
          method: "DELETE",
          headers: {
             "content-type": "application/json",
@@ -61,6 +61,7 @@ const MyOrders = () => {
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Order Date</th>
+                        <th>TxId.</th>
                         <th>Action</th>
                      </tr>
                   </thead>
@@ -99,9 +100,22 @@ const MyOrders = () => {
                                  </span>
                               </div>
                            </td>
+                           <td>
+                              <div className="flex flex-col">
+                                 <span className="text-slate-500">
+                                    {order.txId}
+                                 </span>
+                              </div>
+                           </td>
                            <th>
                               <div className="flex gap-2 items-center">
-                                 <span className="text-sm badge bg-base-300 border-0 text-black font-thin ">
+                                 <span
+                                    className={`text-sm badge  border-0 text-black font-thin ${
+                                       order.status === "paid"
+                                          ? "bg-success"
+                                          : "bg-base-300"
+                                    }`}
+                                 >
                                     {order.status}
                                  </span>
                                  <label for="payment" class=" cursor-pointer">
@@ -135,6 +149,7 @@ const MyOrders = () => {
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Order Date</th>
+                        <th>TxId.</th>
                         <th>Action</th>
                      </tr>
                   </tfoot>

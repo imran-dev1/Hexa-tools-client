@@ -16,7 +16,7 @@ const ManageAllOrders = () => {
       isLoading,
       refetch,
    } = useQuery(["allOrders", user], () =>
-      fetch(`http://localhost:4000/all-orders`, {
+      fetch(`https://hexa-tools.herokuapp.com/all-orders`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
@@ -30,7 +30,7 @@ const ManageAllOrders = () => {
 
    const handleCancelOrder = (id) => {
       console.log(id);
-      fetch(`http://localhost:4000/order/${id}`, {
+      fetch(`https://hexa-tools.herokuapp.com/order/${id}`, {
          method: "DELETE",
          headers: {
             "content-type": "application/json",
@@ -64,6 +64,7 @@ const ManageAllOrders = () => {
                         <th>Order Date</th>
                         <th>Customer Name</th>
                         <th>Customer Email</th>
+                        <th>TxId.</th>
                         <th>Action</th>
                      </tr>
                   </thead>
@@ -104,9 +105,20 @@ const ManageAllOrders = () => {
                            </td>
                            <td>{order.customerName}</td>
                            <td>{order.email}</td>
+                           <td>
+                              <span className="text-slate-500">
+                                 {order.txId}
+                              </span>
+                           </td>
                            <th>
                               <div className="flex gap-2 items-center">
-                                 <span className="text-sm badge bg-base-300 border-0 text-black font-thin ">
+                                 <span
+                                    className={`text-sm badge  border-0 text-black font-thin ${
+                                       order.status === "paid"
+                                          ? "bg-success"
+                                          : "bg-base-300"
+                                    }`}
+                                 >
                                     {order.status}
                                  </span>
 
@@ -134,6 +146,7 @@ const ManageAllOrders = () => {
                         <th>Order Date</th>
                         <th>Customer Name</th>
                         <th>Customer Email</th>
+                        <th>TxId.</th>
                         <th>Action</th>
                      </tr>
                   </tfoot>

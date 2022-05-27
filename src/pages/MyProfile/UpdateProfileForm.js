@@ -51,7 +51,7 @@ const UpdateProfileForm = ({ update, setUpdate, userInfo, refetch }) => {
                      github: github,
                      photo: img,
                   };
-                  fetch(`http://localhost:4000/user/${email}`, {
+                  fetch(`https://hexa-tools.herokuapp.com/user/${email}`, {
                      method: "PATCH",
                      headers: {
                         "content-type": "application/json",
@@ -85,7 +85,7 @@ const UpdateProfileForm = ({ update, setUpdate, userInfo, refetch }) => {
             facebook: facebook,
             github: github,
          };
-         fetch(`http://localhost:4000/user/${email}`, {
+         fetch(`https://hexa-tools.herokuapp.com/user/${email}`, {
             method: "PATCH",
             headers: {
                "content-type": "application/json",

@@ -12,7 +12,7 @@ import { Rating } from "react-simple-star-rating";
 
 const Reviews = () => {
    const { data: reviews, isLoading } = useQuery("reviews", () =>
-      fetch("http://localhost:4000/review").then((res) => res.json())
+      fetch("https://hexa-tools.herokuapp.com/review").then((res) => res.json())
    );
    console.log(reviews);
 
@@ -27,8 +27,8 @@ const Reviews = () => {
                   Customer Reviews
                </h2>
                <p className=" max-w-md mx-auto mt-5 mb-16">
-                  You contribute over half of your life operating. Let us help
-                  you find the right fit for you or your corporation.
+                  Customers like our tools. Here are some of our clients
+                  reviews.
                </p>
             </div>
             <div className="mt-10">

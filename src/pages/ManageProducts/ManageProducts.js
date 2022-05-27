@@ -28,7 +28,9 @@ const ManageProducts = () => {
       isLoading,
       refetch,
    } = useQuery("manageProducts", () =>
-      fetch("http://localhost:4000/product").then((res) => res.json())
+      fetch("https://hexa-tools.herokuapp.com/product").then((res) =>
+         res.json()
+      )
    );
 
    if (isLoading) {
@@ -37,7 +39,7 @@ const ManageProducts = () => {
    const handleUpdate = (event, id) => {
       event.preventDefault();
       if (productName && productDetails && price && available && minimumOrder) {
-         fetch(`http://localhost:4000/product/${id}`, {
+         fetch(`https://hexa-tools.herokuapp.com/product/${id}`, {
             method: "PATCH",
             body: JSON.stringify({
                name: productName,
@@ -70,7 +72,7 @@ const ManageProducts = () => {
    };
 
    const handleDelete = (id) => {
-      fetch(`http://localhost:4000/product/${id}`, {
+      fetch(`https://hexa-tools.herokuapp.com/product/${id}`, {
          method: "DELETE",
          headers: {
             "content-type": "application/json",
@@ -112,10 +114,7 @@ const ManageProducts = () => {
                            <div class="flex items-center space-x-3">
                               <div class="avatar">
                                  <div class="mask mask-squircle w-12 h-12">
-                                    <img
-                                       src={p.image}
-                                       alt="Avatar Tailwind CSS Component"
-                                    />
+                                    <img src={p.image} alt="product-img" />
                                  </div>
                               </div>
                               <div>

@@ -4,7 +4,7 @@ import { FaFacebookF,FaInstagram, FaRegEnvelope } from "react-icons/fa";
 
 const Footer = () => {
    return (
-      <div className="py-16 px-3 bg-secondary mt-16">
+      <div className="py-16 px-3 bg-secondary-focus mt-16">
          <div className="container mx-auto" style={{ maxWidth: "1100px" }}>
             <div className="text-white text-left grid grid-cols-1 md:grid-cols-3 gap-10">
                <div>
