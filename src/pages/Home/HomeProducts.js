@@ -10,7 +10,7 @@ import Loading from "../../components/Loading/Loading";
 
 const HomeProducts = () => {
    const { data: products, isLoading } = useQuery("products", () =>
-      fetch("https://hexa-tools.herokuapp.com/product/").then((res) =>
+      fetch("https://hexa-tools.onrender.com/product/").then((res) =>
          res.json()
       )
    );

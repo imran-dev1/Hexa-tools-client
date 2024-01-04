@@ -29,7 +29,7 @@ const AddReview = () => {
          image: user.photoURL,
       };
 
-      fetch("https://hexa-tools.herokuapp.com/review", {
+      fetch("https://hexa-tools.onrender.com/review", {
          method: "POST",
          headers: {
             "content-type": "application/json",

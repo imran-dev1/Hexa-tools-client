@@ -7,7 +7,7 @@ const useUserInfo = (user) => {
       isLoading,
       refetch,
    } = useQuery("userProfile", () =>
-      fetch(`https://hexa-tools.herokuapp.com/user/${email}`, {
+      fetch(`https://hexa-tools.onrender.com/user/${email}`, {
          method: "GET",
          headers: {
             "Content-type": "application/json; charset=UTF-8",

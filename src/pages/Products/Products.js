@@ -5,7 +5,7 @@ import Product from "../Home/Product";
 
 const Products = () => {
    const { data: products, isLoading } = useQuery("allProducts", () =>
-      fetch("https://hexa-tools.herokuapp.com/product/").then((res) =>
+      fetch("https://hexa-tools.onrender.com/product/").then((res) =>
          res.json()
       )
    );

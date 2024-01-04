@@ -10,7 +10,7 @@ import { Rating } from "react-simple-star-rating";
 
 const Reviews = () => {
    const { data: reviews, isLoading } = useQuery("reviews", () =>
-      fetch("https://hexa-tools.herokuapp.com/review").then((res) => res.json())
+      fetch("https://hexa-tools.onrender.com/review").then((res) => res.json())
    );
 
    if (isLoading) {

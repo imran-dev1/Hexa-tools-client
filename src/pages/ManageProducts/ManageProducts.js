@@ -28,9 +28,7 @@ const ManageProducts = () => {
       isLoading,
       refetch,
    } = useQuery("manageProducts", () =>
-      fetch("https://hexa-tools.herokuapp.com/product").then((res) =>
-         res.json()
-      )
+      fetch("https://hexa-tools.onrender.com/product").then((res) => res.json())
    );
 
    if (isLoading) {
@@ -39,7 +37,7 @@ const ManageProducts = () => {
    const handleUpdate = (event, id) => {
       event.preventDefault();
       if (productName && productDetails && price && available && minimumOrder) {
-         fetch(`https://hexa-tools.herokuapp.com/product/${id}`, {
+         fetch(`https://hexa-tools.onrender.com/product/${id}`, {
             method: "PATCH",
             body: JSON.stringify({
                name: productName,
@@ -72,7 +70,7 @@ const ManageProducts = () => {
    };
 
    const handleDelete = (id) => {
-      fetch(`https://hexa-tools.herokuapp.com/product/${id}`, {
+      fetch(`https://hexa-tools.onrender.com/product/${id}`, {
          method: "DELETE",
          headers: {
             "content-type": "application/json",

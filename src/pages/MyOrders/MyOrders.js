@@ -15,7 +15,7 @@ const MyOrders = () => {
       isLoading,
       refetch,
    } = useQuery(["myOrders", user], () =>
-      fetch(`https://hexa-tools.herokuapp.com/order/?email=${user?.email}`, {
+      fetch(`https://hexa-tools.onrender.com/order/?email=${user?.email}`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
@@ -29,7 +29,7 @@ const MyOrders = () => {
 
    const handleCancelOrder = (id) => {
       console.log(id);
-      fetch(`https://hexa-tools.herokuapp.com/order/${id}`, {
+      fetch(`https://hexa-tools.onrender.com/order/${id}`, {
          method: "DELETE",
          headers: {
             "content-type": "application/json",

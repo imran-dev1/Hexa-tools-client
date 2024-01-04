@@ -16,7 +16,7 @@ const Payment = () => {
    //    const [order, setOrder] = useState({});
 
    const { data: order, isLoading } = useQuery(["purchase", id], () =>
-      fetch(`https://hexa-tools.herokuapp.com/order/${id}`, {
+      fetch(`https://hexa-tools.onrender.com/order/${id}`, {
          method: "GET",
          headers: {
             "content-type": "application/json",
@@ -30,7 +30,7 @@ const Payment = () => {
    }
 
    //    useEffect(() => {
-   //       fetch(`https://hexa-tools.herokuapp.com/order/${id}`, {
+   //       fetch(`https://hexa-tools.onrender.com/order/${id}`, {
    //          method: "GET",
    //          headers: {
    //             "content-type": "application/json",

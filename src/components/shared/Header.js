@@ -15,6 +15,8 @@ const Header = ({ children }) => {
    const [userInfo, isLoading, refetch] = useUserInfo(user);
    const navigate = useNavigate();
 
+   console.log(userInfo);
+
    const logOut = () => {
       signOut(auth);
       navigate("/");

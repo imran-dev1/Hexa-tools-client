@@ -12,7 +12,7 @@ const useToken = (user) => {
          photo,
       };
       if (email) {
-         fetch(`https://hexa-tools.herokuapp.com/user/${email}`, {
+         fetch(`https://hexa-tools.onrender.com/user/${email}`, {
             method: "PUT",
             headers: {
                "content-type": "application/json",

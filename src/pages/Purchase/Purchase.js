@@ -32,7 +32,7 @@ const Purchase = () => {
       isLoading,
       refetch,
    } = useQuery("product", () =>
-      fetch(`https://hexa-tools.herokuapp.com/product/${_id}`).then((res) => {
+      fetch(`https://hexa-tools.onrender.com/product/${_id}`).then((res) => {
          return res.json();
       })
    );
@@ -85,7 +85,7 @@ const Purchase = () => {
          txId: "",
          status: "unpaid",
       };
-      fetch("https://hexa-tools.herokuapp.com/order", {
+      fetch("https://hexa-tools.onrender.com/order", {
          method: "POST",
          headers: {
             "content-type": "application/json",
@@ -98,7 +98,7 @@ const Purchase = () => {
             if (data.insertedId) {
                toast.success("Order is placed successfully!");
                fetch(
-                  `https://hexa-tools.herokuapp.com/product-available/${product._id}`,
+                  `https://hexa-tools.onrender.com/product-available/${product._id}`,
                   {
                      method: "PATCH",
                      body: JSON.stringify({

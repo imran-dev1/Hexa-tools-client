@@ -11,7 +11,7 @@ const MakeAdmin = () => {
       isLoading,
       refetch,
    } = useQuery("users", () =>
-      fetch("https://hexa-tools.herokuapp.com/user", {
+      fetch("https://hexa-tools.onrender.com/user", {
          method: "GET",
          headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -29,7 +29,7 @@ const MakeAdmin = () => {
    }
 
    const makeAdmin = (email) => {
-      fetch(`https://hexa-tools.herokuapp.com/user/admin/${email}`, {
+      fetch(`https://hexa-tools.onrender.com/user/admin/${email}`, {
          method: "PUT",
          headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,

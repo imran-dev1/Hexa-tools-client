@@ -14,7 +14,7 @@ const CheckoutForm = ({ order }) => {
    const amount = parseInt(orderAmount);
 
    useEffect(() => {
-      fetch("https://hexa-tools.herokuapp.com/create-payment-intent", {
+      fetch("https://hexa-tools.onrender.com/create-payment-intent", {
          method: "POST",
          headers: {
             "content-type": "application/json",
@@ -66,7 +66,7 @@ const CheckoutForm = ({ order }) => {
          setCardError(intentError?.message);
       } else {
          setCardError("");
-         fetch(`https://hexa-tools.herokuapp.com/order/${order._id}`, {
+         fetch(`https://hexa-tools.onrender.com/order/${order._id}`, {
             method: "PATCH",
             body: JSON.stringify({
                txId: paymentIntent.id,
